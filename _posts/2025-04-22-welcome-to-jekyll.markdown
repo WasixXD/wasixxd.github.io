@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "01"
+title:  "First blog"
 date:   2025-04-22 10:19:51 -0300
 categories: jekyll update
 ---
