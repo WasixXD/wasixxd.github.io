@@ -21,7 +21,7 @@
 title: Lucas Wasilewski
 email: wasilewski2020@example.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Tech Blog to force myself to write better at english and as a person
+  Aventuras em computação em pouco ou quase nenhum texto sobre
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: wasixxd

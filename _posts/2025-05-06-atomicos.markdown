@@ -1,0 +1,91 @@
+---
+layout: post
+title:  "Atómicos"
+date:   2025-05-06 10:19:51 -0300
+categories: concurrency
+---
+
+Uma váriavel atómica é um primitivo de sincronização que ajuda _threads_ ou _processos_ a garantir que uma operação seja realizada, ou seja, dada a operação nessa váriavel, ela só pode ter dois estados: totalmente completa ou não. Isso faz com que uma vez que ela tenha se iniciado não pode ser parada, o que gera uma garantia que a operação foi realizada não importa o que tenha acontecido, seja uma troca de contexto, uma parada súbita no hardware ou etc.
+
+```bash
+thread_a -> x++
+thread_b -> x++
+```
+
+Nesse exemplo, caso ambas as threads executem ao mesmo tempo, *x* pode assumir dois valores: 1 ou 2. Isso porque, ambas threads podem _ler_ o valor de _x_ como 0 e incrementar para 1 (ao mesmo tempo) ou as threads podem _ler_ e _escrever_ os valores umas seguidas das outras, gerando o valor 2. 
+
+Isso pode ser muito ruim em contextos concorrentes pois pode gerar valores não-probabilísticos, usando _atómicos_ nesse caso faria com que as operações de _ler_ e _escrever_ sempre ocorram na ordem que chegam, criando o valor correto.
+
+
+Em GO:
+
+```golang
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+var num int
+var wait = sync.WaitGroup{}
+
+const TO = 100_000
+
+func main() {
+
+	for range 2 {
+		wait.Add(1)
+		go func() {
+			defer wait.Done()
+			for range TO {
+				num++
+			}
+		}()
+	}
+
+	wait.Wait()
+
+	fmt.Println(num) // Pode ser 144978, 161332 ou 149767
+}
+```
+
+
+Agora usando atómicos:
+
+```golang
+package main
+
+import (
+	"fmt"
+	"sync"
+	"sync/atomic"
+)
+
+var num atomic.Int32
+var wait = sync.WaitGroup{}
+
+const TO = 100_000
+
+func main() {
+
+	for range 2 {
+		wait.Add(1)
+		go func() {
+			defer wait.Done()
+			for range TO {
+				num.Add(1)
+			}
+		}()
+	}
+
+	wait.Wait()
+
+	fmt.Println(num.Load()) // Sempre vai ser 200_000 
+
+}
+```
+
+
+
+
