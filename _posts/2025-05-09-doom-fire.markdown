@@ -1,0 +1,30 @@
+---
+layout: post
+title:  "Fogo do DOOM"
+date:   2025-05-09 10:19:51 -0300
+categories: programming
+---
+
+
+Acredito que programar não é como andar de bicicleta, e por isso deve ser um esforço diário para se manter afiado na resolução dos problemas e em pensar como um programador. Claro, você não esquece o básico, porém, a facilidade na hora de usar os famosos `syntax sugars` como `.map`, `.fill` e `.reduce` e suas variantes só vem depois de usá-las e entenda-las diariamente.
+
+Por isso deve ser uma prática diária, o problema é que se você trabalha com isso, chegar em casa depois do trabalho e ter que passar mais um tempo programando pode ser difícil, porém pode ser fácil de contornar se você ver mais a diversão do que mais um problema para se resolver, para mim isso vem na forma de criar coisas visuais. Desde quando comecei a programar sempre fui muito fã de um canal chamado *Coding Train*, lá ele sempre realiza desafios usando uma biblioteca chamada *p5* que facilita a vida ao mexer com o _canvas_ do html e é muito divertido ver as coisas tomando forma, sejam elas: um buraco negro, fisica aplicada nos objetos, simular liquídos e etc.
+
+Um dos desafios que ele realiza é a simulação de fogo, que por si só é muito divertido, mas fica ainda mais legal se você souber que existe como simular o fogo que era usado no jogo DOOM, é algo pixelado e o efeito fica muito bonito, por isso aqui vai um tutorial.
+
+***Não usarei código, apenas mostrarei a lógica, implemente você mesmo!***
+
+***Primeiro***: entenda que cada "pixel" é um elemente de uma matriz 2d, cada pixel pode ter o valor de 0 a 36, esses valores são a intensidade do fogo e determina como ele será renderizado, então o primeiro passo é: *Crie uma matrix NxM onde a última linha tenha o valor máximo (36)*
+
+
+***Segundo***: consiga um outro array ou hashmap que consiga retornar um valor com cores, onde o 36 seria o valor mais claro e o 0 o mais escuro, isso vai servir para termos cores para renderizar os valores da nossa matriz, isso será nossa paleta
+
+***Terceiro***: Itere sobre a matriz e use a paleta para preencher cada pixel
+
+***Quarto***: Agora itere novamente sobre a matriz porém agora para cada pixel, cheque o pixel de baixo e subtraia o valor dele com um fator aleátorio entre 0 e 3, e coloque no pixel atual, *não esqueça de checar se o valor não é menor que 0*, atualize a matriz e volte ao ***Terceiro passo*** 
+
+Com sorte você terá algo semelhante a foto abaixo:
+![Doom](/assets/doom.png)
+
+
+Se quiser ver com os próprios olhos, cheque: [Minha implementação](https://wasixxd.github.io/doom-fire/)
